@@ -1,18 +1,31 @@
-const D_PRICE = 15;
-const C_PRICE = 20;
-const B_PRICE = 30;
-const A_PRICE = 50;
 
-export function checkout(items: string) {
-  let total = 0;
+import { Discount } from "./Discount";
+import { itemFactory } from "./Item";
 
-  for (let item of items.split('')) {
-    if (item === 'D') total += D_PRICE;
-    else if (item === 'C') total += C_PRICE;
-    else if (item === 'B') total += B_PRICE;
-    else if (item === 'A') total += A_PRICE;
-    else throw new Error('Unknown item');
-  }
+export class Store {
+    constructor(private discountList?: Discount[]) { }
 
-  return total;
+    checkout(itemList: string): number {
+        const total = this.caclulateTotal(itemList);
+        const discount = this.calculateDiscount(itemList);  
+
+        return total - discount;
+    }
+
+    private calculateDiscount(itemList: string) {
+        let totalDiscount = 0;
+        for (const discount of this.discountList) {
+            totalDiscount += discount.calculateDiscount(itemList);
+        }
+        return totalDiscount;
+    }
+
+    private caclulateTotal(itemList: string) {
+        let total = 0;
+        for (const itemChar of itemList.split("")) {
+            const item = itemFactory(itemChar);
+            total += item.getPrice();
+        }
+        return total;
+    }
 }
