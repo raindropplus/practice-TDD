@@ -8,12 +8,9 @@ After installation, open Git Bash from the Start menu.
 Navigate to the Directory:
 
 Use the cd command to navigate to the directory containing your init.sh script. For example:
-sh
-Copy code
-cd /path/to/your/script
+
+`cd /path/to/your/script`
 Run the Script:
 
 Execute the script using:
-sh
-Copy code
-sh init.sh
+`sh init.sh`
